@@ -15,6 +15,10 @@ class CreateGarbagesTable extends Migration
     {
         Schema::create('garbages', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('category');
+            $table->text('description');
+            $table->integer('price_per_kg');
             $table->timestamps();
         });
     }

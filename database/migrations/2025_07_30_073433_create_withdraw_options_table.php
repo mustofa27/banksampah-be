@@ -15,6 +15,11 @@ class CreateWithdrawOptionsTable extends Migration
     {
         Schema::create('withdraw_options', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->integer('price');
+            $table->integer('stock');
+            $table->string('image_path');
             $table->timestamps();
         });
     }

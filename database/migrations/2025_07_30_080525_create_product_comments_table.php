@@ -15,6 +15,10 @@ class CreateProductCommentsTable extends Migration
     {
         Schema::create('product_comments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('product_id')->constrained();
+            $table->text('comment');
+            $table->integer('rating');
             $table->timestamps();
         });
     }

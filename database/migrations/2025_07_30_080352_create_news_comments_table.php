@@ -15,6 +15,9 @@ class CreateNewsCommentsTable extends Migration
     {
         Schema::create('news_comments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('news_id')->constrained();
+            $table->text('comment');
             $table->timestamps();
         });
     }

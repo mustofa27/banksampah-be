@@ -15,6 +15,9 @@ class CreateUserLogsTable extends Migration
     {
         Schema::create('user_logs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->string('activity');
+            $table->text('data');
             $table->timestamps();
         });
     }

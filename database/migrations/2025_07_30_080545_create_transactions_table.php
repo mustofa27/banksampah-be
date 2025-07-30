@@ -15,6 +15,13 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->bigInteger('total_price');
+            $table->integer('status');
+            $table->integer('unique_code');
+            $table->string('image_path');
+            $table->bigInteger('total_point');
+            $table->bigInteger('total_discount');
             $table->timestamps();
         });
     }

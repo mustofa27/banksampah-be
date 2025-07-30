@@ -15,6 +15,10 @@ class CreateWithdrawsTable extends Migration
     {
         Schema::create('withdraws', function (Blueprint $table) {
             $table->id();
+            $table->integer('count');
+            $table->bigInteger('balance_used');
+            $table->integer('status');
+            $table->foreignId('withdraw_option_id')->constrained();
             $table->timestamps();
         });
     }

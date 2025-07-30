@@ -15,6 +15,11 @@ class CreateSavingsTable extends Migration
     {
         Schema::create('savings', function (Blueprint $table) {
             $table->id();
+            $table->integer('weight');
+            $table->bigInteger('total_price');
+            $table->integer('status');
+            $table->foreignId('garbage_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }
