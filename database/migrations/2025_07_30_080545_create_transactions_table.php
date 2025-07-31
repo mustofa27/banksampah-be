@@ -20,7 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('status');
             $table->integer('unique_code');
             $table->string('image_path');
-            $table->bigInteger('total_point');
+            $table->integer('total_point');
             $table->bigInteger('total_discount');
             $table->timestamps();
         });
