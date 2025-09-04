@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-class UserResource extends APIResource
+class NewsResource extends APIResource
 {
     /**
      * Transform the resource into an array.

@@ -24,6 +24,26 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        // Auto login setelah register
+        $token = Auth::guard('api')->login($user);
+
+        return $this->respondWithToken($token);
+    }
+
     public function me()
     {
         return new UserResource(true, 'User profile retrieved successfully',Auth::user());
