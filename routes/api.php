@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,8 @@ Route::group([
     Route::post('login', [AuthController::class, 'login']);
     Route::post('refresh', [AuthController::class, 'refresh']);
 });
+Route::apiResource('news', NewsController::class)->only(['index', 'show']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::group([
         'prefix' => 'auth'
@@ -33,4 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
             return $request->user();
         });
     });
+    Route::apiResource('news', NewsController::class)->except(['index','show','update']);
+    Route::post('news/update', [NewsController::class, 'update']);
 });

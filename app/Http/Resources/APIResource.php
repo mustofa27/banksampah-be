@@ -10,7 +10,7 @@ class APIResource extends JsonResource
     protected bool $status = true;
     protected int $httpCode = 200;
 
-    public function __construct($status, $message, $resource)
+    public function __construct($status=true, $message="ok", $resource)
     {
         parent::__construct($resource);
         $this->status  = $status;
