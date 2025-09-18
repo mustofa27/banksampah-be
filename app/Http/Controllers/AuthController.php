@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Resources\APIResource;
+use Tymon\JWTAuth\Facades\JWTAuth;
 class AuthController extends Controller
 {
 
     public function login(Request $request)
     {
-        if (! Auth::attempt($request->only('email', 'password'))) {
+        $token = auth('api')->attempt($request->only('email', 'password'));
+        if (! $token) {
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
@@ -19,7 +21,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->firstOrFail();
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        //$token = $user->createToken('auth_token')->plainTextToken;
 
         return $this->respondWithToken($token);
     }

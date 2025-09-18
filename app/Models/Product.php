@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'description',
+        'image_path',
+        'price',
+        'stock',
+        'point',
+    ];
     public function comments(): HasMany
     {
         return $this->hasMany(ProductComment::class);
