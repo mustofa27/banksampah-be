@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Saving extends Model
 {
+    protected $fillable = [
+        'weight',
+        'total_price',
+        'status',
+        'garbage_id',
+        'user_id',
+    ];
     use HasFactory;
     public function garbage(): BelongsTo
     {

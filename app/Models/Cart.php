@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Cart extends Model
 {
+    protected $fillable = [
+        'product_id',
+        'user_id',
+    ];
     use HasFactory;
     public function user(): BelongsTo
     {

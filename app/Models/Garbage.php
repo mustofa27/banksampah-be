@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Garbage extends Model
 {
+    protected $fillable = [
+        'name',
+        'category',
+        'description',
+        'price_per_kg',
+    ];
     use HasFactory;
     public function savingHistory(): HasMany
     {

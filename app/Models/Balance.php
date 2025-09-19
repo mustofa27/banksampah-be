@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Balance extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'balance',
+    ];
     use HasFactory;
     public function owner(): BelongsTo
     {

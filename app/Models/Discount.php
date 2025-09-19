@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Discount extends Model
 {
+    protected $fillable = [
+        'product_id',
+        'percentage',
+        'start_at',
+        'end_at',
+    ];
     use HasFactory;
     public function product(): BelongsTo
     {
