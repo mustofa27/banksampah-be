@@ -25,7 +25,7 @@ class SavingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'weight'   => 'required|integer',
+            'weight'   => 'required|float',
             'garbage_id' => 'required|integer',
         ]);
         $garbage = Garbage::where('id',$request->garbage_id)->first();
@@ -73,7 +73,7 @@ class SavingController extends Controller
         }
         
         $request->validate([
-            'weight'   => 'required|integer',
+            'weight'   => 'required|float',
             'garbage_id' => 'required|integer',
             'status' => 'required|integer',
         ]);
