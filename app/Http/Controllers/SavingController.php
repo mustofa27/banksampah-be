@@ -47,7 +47,7 @@ class SavingController extends Controller
             'weight'   => $request->weight,
             'garbage_id' => $request->garbage_id,
             'user_id' => $user_id,
-            'total_price' => $garbage->price_per_kg*$request->weight,
+            'total_price' => floor($garbage->price_per_kg*$request->weight/100) * 100,
             'status' => $status,
         ]);
         return new APIResource(true, 'Saving created successfully',$saving);
@@ -87,18 +87,18 @@ class SavingController extends Controller
             if(!$balance){
                 $balance = Balance::create([
                     'user_id'   => $saving->user_id,
-                    'balance' => $garbage->price_per_kg*$request->weight,
+                    'balance' => floor($garbage->price_per_kg*$request->weight/100) * 100,
                 ]);
             } else{
                 $balance->update([
-                    'balance' => $balance->balance + $garbage->price_per_kg*$request->weight,
+                    'balance' => $balance->balance + floor($garbage->price_per_kg*$request->weight/100) * 100,
                 ]);
             }
         }
         $saving->update([
             'weight'   => $request->weight,
             'garbage_id' => $request->garbage_id,
-            'total_price' => $garbage->price_per_kg*$request->weight,
+            'total_price' => floor($garbage->price_per_kg*$request->weight/100) * 100,
             'status' => $request->status,
         ]);
         

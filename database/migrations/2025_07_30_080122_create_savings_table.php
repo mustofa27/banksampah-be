@@ -15,7 +15,7 @@ class CreateSavingsTable extends Migration
     {
         Schema::create('savings', function (Blueprint $table) {
             $table->id();
-            $table->integer('weight');
+            $table->float('weight');
             $table->bigInteger('total_price');
             $table->integer('status');
             $table->foreignId('garbage_id')->constrained();
