@@ -19,7 +19,7 @@ class SavingController extends Controller
     }
     public function my()
     {
-        $savings = Saving::latest()->where('user_id',Auth::id)->with(['garbage'])->paginate(10);
+        $savings = Saving::latest()->where('user_id',Auth::id())->with(['garbage'])->paginate(10);
         return new APIResource(true, 'Saving list retrieved successfully',$savings);
     }
     public function store(Request $request)
@@ -40,7 +40,7 @@ class SavingController extends Controller
             $user_id = $request->user_id;
             $status = 1;
         } else{
-            $user_id = Auth::id;
+            $user_id = Auth::id();
             $status = 0;
         }
         $saving = Saving::create([
