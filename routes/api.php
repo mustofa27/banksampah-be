@@ -10,6 +10,7 @@ use App\Http\Controllers\SavingController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\BalanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,4 +61,5 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('transaction', TransactionController::class)->except(['update','show','destroy']);
     Route::post('transaction/my', [TransactionController::class, 'my']);
     Route::post('transaction/status', [TransactionController::class, 'update_status']);
+    Route::post('balance/my', [BalanceController::class, 'my']);
 });

@@ -18,7 +18,7 @@ class TransactionController extends Controller
     }
     public function my()
     {
-        $transactions = Transaction::latest()->where('user_id',Auth::id)->with(['items','user'])->get();
+        $transactions = Transaction::latest()->where('user_id',Auth::id())->with(['items','user'])->get();
         return new APIResource(true, 'Transaction list retrieved successfully',$transactions);
     }
     public function store(Request $request)
@@ -37,7 +37,7 @@ class TransactionController extends Controller
         $unique_code = Transaction::latest()->whereDate('created_at','=',Carbon::today())->count() + 1;
         $transaction = Transaction::create([
             'total_price'   => $request->total_price,
-            'user_id' => Auth::id,
+            'user_id' => Auth::id(),
             'status'   => 0,
             'unique_code'   => $unique_code,
             'total_point'   => $request->total_point,
