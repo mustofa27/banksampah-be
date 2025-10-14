@@ -68,4 +68,5 @@ Route::middleware('auth:api')->group(function () {
     Route::post('withdraw_option/update', [WithdrawOptionController::class, 'update']);
     Route::apiResource('withdraw', WithdrawController::class)->except(['update']);
     Route::post('withdraw/update', [WithdrawController::class, 'update']);
+    Route::post('withdraw/my', [WithdrawController::class, 'my']);
 });

@@ -15,6 +15,11 @@ class WithdrawController extends Controller
         $withdraws = Withdraw::latest()->with(['selectedOption', 'user'])->paginate(10);
         return new APIResource(true, 'Withdraw list retrieved successfully',$withdraws);
     }
+    public function my()
+    {
+        $withdraws = Withdraw::latest()->with(['selectedOption', 'user'])->where('user_id', Auth::id())->paginate(10);
+        return new APIResource(true, 'Withdraw list retrieved successfully',$withdraws);
+    }
 
     public function store(Request $request)
     {
