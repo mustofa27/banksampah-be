@@ -11,6 +11,8 @@ use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\BalanceController;
+use App\Http\Controllers\WithdrawOptionController;
+use App\Http\Controllers\WithdrawController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,4 +64,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('transaction/my', [TransactionController::class, 'my']);
     Route::post('transaction/status', [TransactionController::class, 'update_status']);
     Route::post('balance/my', [BalanceController::class, 'my']);
+    Route::apiResource('withdraw_option', WithdrawOptionController::class)->except(['update']);
+    Route::post('withdraw_option/update', [WithdrawOptionController::class, 'update']);
+    Route::apiResource('withdraw', WithdrawController::class)->except(['update']);
+    Route::post('withdraw/update', [WithdrawController::class, 'update']);
 });
