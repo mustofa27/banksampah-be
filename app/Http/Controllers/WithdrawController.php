@@ -81,7 +81,7 @@ class WithdrawController extends Controller
             }
         }
         $balance->save();
-        $withdraw = $withdraw->update([
+        $withdraw->update([
             'count'   => $request->count,
             'balance_used' => $request->balance_used,
             'status' => $request->status,
