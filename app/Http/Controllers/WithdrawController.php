@@ -23,6 +23,10 @@ class WithdrawController extends Controller
             'balance_used' => 'required|integer',
             'withdraw_option_id' => 'required|integer',
         ]);
+        $balance = Balance::where('user_id', Auth::id())->first();
+        if(!$balance || $balance->balance < $request->balance_used){
+            return new APIResource(false, 'Saldo anda tidak cukup',null);
+        }
         $withdraw = Withdraw::create([
             'count'   => $request->count,
             'balance_used' => $request->balance_used,
@@ -60,20 +64,30 @@ class WithdrawController extends Controller
             'user_id' => 'required|integer',
         ]);
         $old_status = $withdraw->status;
-        $withdraw = Withdraw::create([
+        $balance = Balance::where('user_id', $request->user_id)->first();
+        if($old_status != 1 && $request->status == 1){
+            if(!$balance || $balance->balance < $request->balance_used){
+                return new APIResource(false, 'Saldo tidak cukup',null);
+            }
+            $balance->balance -= $request->balance_used;
+        } else if($old_status == 1 && $request->status != 1){
+            if(!$balance){
+                $balance = Balance::create([
+                    'user_id' => $request->user_id,
+                    'balance' => $request->balance_used
+                ]);
+            } else{
+                $balance->balance += $request->balance_used;
+            }
+        }
+        $balance->save();
+        $withdraw = $withdraw->update([
             'count'   => $request->count,
             'balance_used' => $request->balance_used,
             'status' => $request->status,
             'withdraw_option_id' => $request->withdraw_option_id,
             'user_id' => $request->user_id,
         ]);
-        $balance = Balance::where('user_id', $request->user_id)->first();
-        if($old_status == 0 && $request->status == 1){
-            $balance->balance -= $request->balance_used;
-        } else if($old_status == 1 && $request->status != 1){
-            $balance->balance += $request->balance_used;
-        }
-        $balance->save();
         return new APIResource(true, 'Withdraw updated successfully',$withdraw);
     }
 
