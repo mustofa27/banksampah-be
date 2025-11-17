@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Cart;
+use App\Models\Product;
 use App\Http\Resources\APIResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
