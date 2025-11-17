@@ -15,7 +15,7 @@ class CartController extends Controller
     }
     public function my()
     {
-        $carts = Cart::latest()->where('user_id',Auth::id)->with(['product'])->get();
+        $carts = Cart::latest()->where('user_id',Auth::id())->with(['product'])->get();
         return new APIResource(true, 'Saving list retrieved successfully',$carts);
     }
     public function store(Request $request)
