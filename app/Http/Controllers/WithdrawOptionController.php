@@ -11,7 +11,7 @@ class WithdrawOptionController extends Controller
 {
     public function index()
     {
-        $withdrawOptions = WithdrawOption::latest()->paginate(10);
+        $withdrawOptions = WithdrawOption::latest()->get();
         return new APIResource(true, 'WithdrawOption list retrieved successfully',$withdrawOptions);
     }
 
