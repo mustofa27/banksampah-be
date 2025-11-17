@@ -29,7 +29,7 @@ class CartController extends Controller
         }
         $cart = Cart::create([
             'product_id'   => $request->product_id,
-            'user_id' => Auth::id,
+            'user_id' => Auth::id(),
         ]);
         return new APIResource(true, 'Cart created successfully',$cart);
     }
