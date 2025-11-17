@@ -28,6 +28,10 @@ class CartController extends Controller
         if(!$product){
             return new APIResource(false, 'Product not found',null);
         }
+        $cart = Cart::where('product_id', $request->product_id)->where('user_id', Auth::id())->first();
+        if($cart){
+            return new APIResource(true, 'Product already in your cart',$cart);
+        }
         $cart = Cart::create([
             'product_id'   => $request->product_id,
             'user_id' => Auth::id(),
