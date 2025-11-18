@@ -73,6 +73,6 @@ class TransactionController extends Controller
             'status' => $request->status,
         ]);
         
-        return new APIResource(true, 'Transaction status updated successfully',$saving);
+        return new APIResource(true, 'Transaction status updated successfully',$transaction);
     }
 }
