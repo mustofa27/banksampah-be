@@ -25,6 +25,11 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
+    public function user()
+    {
+        $users = User::latest()->get();
+        return new APIResource(true, 'User list retrieved successfully',$user);
+    }
 
     public function register(Request $request)
     {
