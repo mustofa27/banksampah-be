@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Cart;
+use App\Models\Balance;
 use App\Models\TransactionItem;
 use App\Http\Resources\APIResource;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +37,12 @@ class TransactionController extends Controller
             'orders.*.subtotal_point' => 'required|integer',
         ]);
         $unique_code = Transaction::latest()->whereDate('created_at','=',Carbon::today())->count() + 1;
+        $balance = Balance::where('user_id', Auth::id())->first();
+        if($request->balance_used > $balance->balance){
+            $request->balance_used = $balance->balance;
+        }
+        $balance->balance -= $request->balance_used;
+        $balance->save();
         $transaction = Transaction::create([
             'total_price'   => $request->total_price,
             'user_id' => Auth::id(),
@@ -69,14 +76,20 @@ class TransactionController extends Controller
         if (! $transaction) {
             return new APIResource(false, 'Transaction not found',null);
         }
-        
+        $balance = Balance::where('user_id', Auth::id())->first();
         $request->validate([
             'status'   => 'required|integer',
         ]);
+        if($transaction->status == -1){
+            return new APIResource(false, 'Transaction already rejected',$transaction);
+        }
+        if($request->status == -1){
+            $balance->balance += $transaction->balance_used;
+        }
         $transaction->update([
             'status' => $request->status,
         ]);
-        
+        $balance->save();
         return new APIResource(true, 'Transaction status updated successfully',$transaction);
     }
     public function store_payment(Request $request)
