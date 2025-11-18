@@ -36,7 +36,6 @@ class TransactionController extends Controller
             'orders.*.subtotal_point' => 'required|integer',
         ]);
         $unique_code = Transaction::latest()->whereDate('created_at','=',Carbon::today())->count() + 1;
-        return new APIResource(true, 'Tes',$request);
         $transaction = Transaction::create([
             'total_price'   => $request->total_price,
             'user_id' => Auth::id(),
@@ -50,11 +49,11 @@ class TransactionController extends Controller
         foreach($request->orders as $order){
             TransactionItem::create([
                 'transaction_id'   => $transaction->id,
-                'product_id' => $order->product_id,
-                'quantity'   => $order->quantity,
-                'subtotal_price'   => $order->subtotal_price,
-                'subtotal_discount'   => $order->subtotal_discount,
-                'subtotal_point'   => $order->subtotal_point,
+                'product_id' => $order["product_id"],
+                'quantity'   => $order["quantity"],
+                'subtotal_price'   => $order["subtotal_price"],
+                'subtotal_discount'   => $order["subtotal_discount"],
+                'subtotal_point'   => $order["subtotal_point"],
             ]);
         }
         return new APIResource(true, 'Transaction created successfully',$transaction);
