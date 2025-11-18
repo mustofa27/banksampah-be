@@ -36,6 +36,7 @@ class TransactionController extends Controller
             'orders.*.subtotal_point' => 'required|integer',
         ]);
         $unique_code = Transaction::latest()->whereDate('created_at','=',Carbon::today())->count() + 1;
+        return new APIResource(true, 'Tes',$request);
         $transaction = Transaction::create([
             'total_price'   => $request->total_price,
             'user_id' => Auth::id(),
