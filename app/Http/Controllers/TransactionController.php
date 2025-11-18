@@ -75,4 +75,26 @@ class TransactionController extends Controller
         
         return new APIResource(true, 'Transaction status updated successfully',$transaction);
     }
+    public function store_payment(Request $request)
+    {
+        $request->validate([
+            'id'   => 'required|integer',
+            'image'   => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+        $transaction = Transaction::find($request->id);
+
+        if (! $transaction) {
+            return new APIResource(false, 'Transaction not found',null);
+        }
+        
+        $path = null;
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('payment', 'public');
+        }
+        $transaction->update([
+            'image_path' => $path,
+        ]);
+        
+        return new APIResource(true, 'Payment proof submitted',$transaction);
+    }
 }

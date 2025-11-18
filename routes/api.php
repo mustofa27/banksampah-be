@@ -63,6 +63,7 @@ Route::middleware('auth:api')->group(function () {
     Route::apiResource('transaction', TransactionController::class)->except(['update','show','destroy']);
     Route::post('transaction/my', [TransactionController::class, 'my']);
     Route::post('transaction/status', [TransactionController::class, 'update_status']);
+    Route::post('transaction/payment', [TransactionController::class, 'store_payment']);
     Route::post('balance/my', [BalanceController::class, 'my']);
     Route::apiResource('withdraw_option', WithdrawOptionController::class)->except(['update']);
     Route::post('withdraw_option/update', [WithdrawOptionController::class, 'update']);
