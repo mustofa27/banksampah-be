@@ -28,6 +28,7 @@ Route::group([
     'prefix' => 'auth'
 ], function () {
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
 });
 Route::apiResource('news', NewsController::class)->only(['index', 'show']);
 Route::apiResource('product', ProductController::class)->only(['index', 'show']);
