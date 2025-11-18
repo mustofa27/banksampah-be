@@ -13,7 +13,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::latest()->with(['items','user'])->paginate(10);
+        $transactions = Transaction::latest()->with(['items','user', 'items.product'])->paginate(10);
         return new APIResource(true, 'Transaction list retrieved successfully',$transactions);
     }
     public function my()
@@ -27,6 +27,7 @@ class TransactionController extends Controller
             'total_price' => 'required|integer',
             'total_point' => 'required|integer',
             'total_discount' => 'required|integer',
+            'balance_used' => 'required|integer',
             'orders' => 'required|array|min:1',
             'orders.*.product_id' => 'required|integer|distinct',
             'orders.*.quantity' => 'required|integer',
@@ -40,6 +41,7 @@ class TransactionController extends Controller
             'user_id' => Auth::id(),
             'status'   => 0,
             'unique_code'   => $unique_code,
+            'balance_used'   => $request->balance_used,
             'total_point'   => $request->total_point,
             'total_discount'   => $request->total_discount,
             'image_path'   => '',

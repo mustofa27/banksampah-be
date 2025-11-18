@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('total_price');
             $table->integer('status');
             $table->integer('unique_code');
+            $table->bigInteger('balance_used');
             $table->string('image_path');
             $table->integer('total_point');
             $table->bigInteger('total_discount');

@@ -14,6 +14,7 @@ class Transaction extends Model
         'total_price',
         'status',
         'unique_code',
+        'balance_used',
         'image_path',
         'total_point',
         'total_discount',
