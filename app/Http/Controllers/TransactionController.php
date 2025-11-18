@@ -55,6 +55,10 @@ class TransactionController extends Controller
                 'subtotal_discount'   => $order["subtotal_discount"],
                 'subtotal_point'   => $order["subtotal_point"],
             ]);
+            $cart = Cart::where('product_id', $order["product_id"])->where('user_id', Auth::id())->first();
+            if($cart){
+                $cart->delete();
+            }
         }
         return new APIResource(true, 'Transaction created successfully',$transaction);
     }
