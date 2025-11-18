@@ -28,7 +28,7 @@ class AuthController extends Controller
     public function user()
     {
         $users = User::latest()->get();
-        return new APIResource(true, 'User list retrieved successfully',$user);
+        return new APIResource(true, 'User list retrieved successfully',$users);
     }
 
     public function register(Request $request)
