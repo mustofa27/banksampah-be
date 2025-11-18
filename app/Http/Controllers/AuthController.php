@@ -32,7 +32,7 @@ class AuthController extends Controller
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'phone_number' => 'required|regex:/^[0-9]{10}$/',
+            'phone_number' => 'required|regex:/^[0-9]$/',
         ]);
 
         $user = User::create([
