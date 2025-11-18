@@ -61,7 +61,7 @@ class ProductController extends Controller
         $request->validate([
             'name'   => 'required|string|max:255',
             'description' => 'required|string',
-            'image'   => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'image'   => 'image|mimes:jpg,jpeg,png|max:2048',
             'price' => 'required|integer',
             'stock' => 'required|integer',
             'point' => 'required|integer',
@@ -69,15 +69,23 @@ class ProductController extends Controller
         $path = null;
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
+            $product->update([
+                'name'   => $request->name,
+                'description' => $request->description,
+                'image_path' => $path,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'point' => $request->point,
+            ]);
+        } else{
+            $product->update([
+                'name'   => $request->name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'point' => $request->point,
+            ]);
         }
-        $product->update([
-            'name'   => $request->name,
-            'description' => $request->description,
-            'image_path' => $path,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'point' => $request->point,
-        ]);
 
         return new APIResource(true, 'Product updated successfully',$product);
     }

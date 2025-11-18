@@ -70,18 +70,24 @@ class NewsController extends Controller
         $request->validate([
             'title'   => 'required|string|max:255',
             'content' => 'required|string',
-            'image'   => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'image'   => 'image|mimes:jpg,jpeg,png|max:2048',
         ]);
         $path = null;
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('news', 'public');
+            $news->update([
+                'title'   => $request->title,
+                'content' => $request->content,
+                'user_id' => Auth::id(),
+                'image_path' => $path,
+            ]);
+        } else{
+            $news->update([
+                'title'   => $request->title,
+                'content' => $request->content,
+                'user_id' => Auth::id(),
+            ]);
         }
-        $news->update([
-            'title'   => $request->title,
-            'content' => $request->content,
-            'user_id' => Auth::id(),
-            'image_path' => $path,
-        ]);
 
         return new APIResource(true, 'News updated successfully',$news);
     }

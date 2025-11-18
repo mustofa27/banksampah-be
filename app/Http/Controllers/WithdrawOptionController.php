@@ -60,21 +60,28 @@ class WithdrawOptionController extends Controller
         $request->validate([
             'name'   => 'required|string|max:255',
             'description' => 'required|string',
-            'image'   => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'image'   => 'image|mimes:jpg,jpeg,png|max:2048',
             'price' => 'required|integer',
             'stock' => 'required|integer',
         ]);
         $path = null;
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('withdrawOptions', 'public');
+            $withdrawOption->update([
+                'name'   => $request->name,
+                'description' => $request->description,
+                'image_path' => $path,
+                'price' => $request->price,
+                'stock' => $request->stock,
+            ]);
+        } else{
+            $withdrawOption->update([
+                'name'   => $request->name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'stock' => $request->stock,
+            ]);
         }
-        $withdrawOption->update([
-            'name'   => $request->name,
-            'description' => $request->description,
-            'image_path' => $path,
-            'price' => $request->price,
-            'stock' => $request->stock,
-        ]);
 
         return new APIResource(true, 'WithdrawOption updated successfully',$withdrawOption);
     }
