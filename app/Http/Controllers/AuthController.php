@@ -32,18 +32,17 @@ class AuthController extends Controller
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'phone_number' => 'required|regex:/^[0-9]{10}$/',
         ]);
 
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => bcrypt($request->password),
+            'phone_number'    => $request->phone_number,
         ]);
 
-        // Auto login setelah register
-        $token = Auth::guard('api')->login($user);
-
-        return $this->respondWithToken($token);
+        return new APIResource(true, 'Registration success', $user);
     }
 
     public function me()
