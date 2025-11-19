@@ -11,7 +11,7 @@ class GarbageController extends Controller
 {
     public function index()
     {
-        $garbages = Garbage::latest()->paginate(10);
+        $garbages = Garbage::latest()->get();
         return new APIResource(true, 'Garbage list retrieved successfully',$garbages);
     }
 
