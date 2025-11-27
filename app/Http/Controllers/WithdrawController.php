@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Withdraw;
 use App\Models\Balance;
+use App\Models\User;
 use App\Http\Resources\APIResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,16 +29,27 @@ class WithdrawController extends Controller
             'balance_used' => 'required|integer',
             'withdraw_option_id' => 'required|integer',
         ]);
-        $balance = Balance::where('user_id', Auth::id())->first();
+        if($request->user_id){
+            $user = User::find($request->user_id);
+            if(!$user){
+                return new APIResource(false, 'User not found',null);
+            }
+            $user_id = $request->user_id;
+            $status = 1;
+        } else{
+            $user_id = Auth::id();
+            $status = 0;
+        }
+        $balance = Balance::where('user_id', $user_id)->first();
         if(!$balance || $balance->balance < $request->balance_used){
-            return new APIResource(false, 'Saldo anda tidak cukup',null);
+            return new APIResource(false, 'Saldo tidak cukup',null);
         }
         $withdraw = Withdraw::create([
             'count'   => $request->count,
             'balance_used' => $request->balance_used,
-            'status' => 0,
+            'status' => $status,
             'withdraw_option_id' => $request->withdraw_option_id,
-            'user_id' => Auth::id(),
+            'user_id' => $user_id,
         ]);
         return new APIResource(true, 'Withdraw created successfully',$withdraw);
     }
